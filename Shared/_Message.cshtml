@@ -1,0 +1,83 @@
+﻿@using SampleCoreApp.Infrastructure.BaseModels
+@model MessageModel
+@if (Model != null)
+{
+    <div id="divMessageServer">
+        @if (!Model.IsJson)
+        {
+            @if (!string.IsNullOrEmpty(Model.MessageTypeCode))
+            {
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="@Model.MessageTypeIconClass">
+                            <span class="font-weight-bold">@Model.MessageCode @Model.MessageText</span>
+
+                            @foreach (var item in Model.MessageModels)
+                            {
+                                <p>
+                                    <i>
+                                        <span class="preserve-space-line-breaks"><b>Message:</b> @item.MessageText</span>
+                                        <br />
+                                        <span class="preserve-space-line-breaks"><b>Stack Trace:</b>  @item.MessageDescription</span>
+                                    </i>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+
+<div id="divClientMessage" style="display:none;">
+    <div class="row mr-5">
+        <div class="col-sm-12">
+            
+        </div>
+    </div>
+</div>
+<div class="" id="divClientMessageText">
+
+</div>
+<span class="font-weight-bold" id="spanHeading" style="display:none;"></span>
+<p id="pChildMessages" style="display:none; height:100px; overflow-y:scroll">
+    <span class="preserve-space-line-breaks font-italic" id="childMessages" style="display:none;"></span>
+</p>
+
+<div id="divErrorMessage" style="display:none;">
+    <div class="row">
+        <div class="col-sm-12 w-90">
+            <div class="alert alert-danger" id="divErrorMessageText">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divWarningMessage" style="display:none;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-warning" id="divWarningMessageText">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divInformationMessage" style="display:none;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-info" id="divInformationMessageText">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divSuccessMessage" style="display:none;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-success" id="divSuccessMessageText">
+
+            </div>
+        </div>
+    </div>
+</div>

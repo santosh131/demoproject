@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SampleCoreApp.Web</title>
+
+    <link rel="icon" type="image/png" href="~/favicon.ico" />
+
+    @*Script*@
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jqueryui/jquery-ui.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/datatables/datatables.min.js"></script>*@
+
+    @*css*@
+    @*
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />
+            <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.css" />
+            <link href="~/lib/jqueryui/themes/base/jquery-ui.css" rel="stylesheet" />
+    *@
+
+    <script src="~/js/bundle.min.js"></script>
+    <link href="~/css/bundle.min.css" rel="stylesheet" />
+    <script src="~/js/site.js"></script>
+    @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+
+    @*<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <link src="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+            <link href="~/lib/datatables/jquery.dataTables.nostyling.min.css" rel="stylesheet" />
+        <link src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+        <link src="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+            <link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />*@
+
+    <script type="text/javascript">
+        var baseUrl = '';//$("#imgSiteUrl").attr("src");// getAbsolutePath();//window.document.location.href;//window.document.location.origin; ////Verify in Production site
+        function getAbsolutePath() {
+            var loc = window.location;
+            var pathName = window.location.pathname.split("/")[1];// "SampleCoreApp";
+            return loc.origin + "/" + pathName;
+        }
+    </script>
+    <style type="text/css">
+        .fa {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="page">
+            <div id="menu-view" name="menu-view"></div>
+        </div>
+    </header>
+    <div class="container" style="margin-top: 58px">       
+        <div role="main" class="pb-3" id="MasterContentLayout" name="MasterContentLayout">
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - SampleCoreApp.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+        </div>
+    </footer>
+    <div class="loadingimage pull-right" style="display:none;"> Please Wait... </div>
+    <img src="~/"  style="display:none" id="imgSiteUrl"/>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        function ModuleLayout() {
+            var ajaxSearchHelper = new AjaxCallsHelper("/Menu/Index", null, null, null, "html");            
+            function LoadMenus() {                 
+                ajaxSearchHelper.params = null;
+                ajaxSearchHelper.GetData().then(function (response) {
+                    response = JSON.parse(response);
+                    if (ShowAjaxMessage(response.message)) {
+                        //Load content
+                        $("#menu-view").html(response.htmlContent);                         
+                    }
+                });
+            }
+
+            return {
+                LoadMenus: LoadMenus
+            };
+        }
+
+        $(function () {          
+            var modLayout = new ModuleLayout();
+            modLayout.LoadMenus();
+        });
+    </script>
+</body>
+</html>

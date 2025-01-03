@@ -1,0 +1,47 @@
+﻿@model SampleCoreApp.Infrastructure.BaseModels.MenuModel
+
+
+@if (Model.ChilMenus != null && Model.ChilMenus.Count > 0)
+{
+    <li class="nav-item dropdown">
+
+        @if (Model.IsChildMenu)
+        { 
+            <a class="nav-link dropdown-toggle-custom text-nowrap" data-toggle="dropdown" href="javascript:void(0)" data-level="1">
+                @Model.MenuName
+                <span class="fa fa-caret-right"></span>
+            </a>
+        }
+        else
+        {
+        <a class="nav-link dropdown-toggle-custom text-nowrap" data-toggle="dropdown" href="javascript:void(0)" data-level="0">
+            @Model.MenuName
+            <span class="fa fa-caret-down"></span>
+        </a>
+        }
+        <ul class="dropdown-menu">
+            @foreach (var itemChild in Model.ChilMenus)
+            {
+                @if (itemChild.ChilMenus != null && itemChild.ChilMenus.Count > 0)
+                {
+                    <partial name="_Menu" model="@itemChild" />
+                }
+                else
+                {
+                    <li>
+                        <a class="nav-link text-nowrap menu-clickable" asp-controller="@itemChild.MenuControllerName"
+                           asp-action="@itemChild.MenuActionName">@itemChild.MenuName</a>
+                    </li>
+                }
+            }
+
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-nowrap" asp-area="@Model.MenuAreaName" asp-controller="@Model.MenuControllerName"
+           asp-action="@Model.MenuActionName">@Model.MenuName</a>
+    </li>
+}
