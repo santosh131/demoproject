@@ -9,6 +9,6 @@ namespace SampleCoreApp.Web.Models
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-        public MessageModel MessageModel { get; set; }
+        public AdditionalInfoModel AdditionalInfoModel { get; set; }
     }
 }
