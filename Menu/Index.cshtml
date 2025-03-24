@@ -1,0 +1,107 @@
+﻿@model SampleCoreApp.Infrastructure.BaseModels.MenuViewModel
+
+@if (Model != null)
+{
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="javascript:void(0)">@Model.ApplicationName</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    @foreach (var item in Model.MenuModels)
+                    {
+                        @if (item.ChilMenus != null && item.ChilMenus.Count > 0)
+                        {
+                            <partial name="_Menu" model="@item" />
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-nowrap menu-clickable" asp-area="@item.MenuAreaName" asp-controller="@item.MenuControllerName"
+                                   asp-action="@item.MenuActionName">@item.MenuName</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            @*TODO : Login/logout
+            *@
+        </div>
+    </nav>
+}
+<script>
+    var menuSelectionStarted = false;
+    function ModuleMenuIndex() {
+        var masterContentLayout = "#MasterContentLayout";
+        function InitialLoad() {
+            //var menuclickable = $('.hdmenuNotClickable').val();
+            //alert(menuclickable);
+            //if (menuclickable.toLowerCase().indexOf('f') > -1 ||
+            //    menuclickable.toLowerCase().indexOf('0') > -1 ||
+            //    menuclickable == "" || menuclickable == null  ) {
+            //    $('.menu-clickable').on("click", function (e) {
+
+            //        var ajaxMenuHelper = new AjaxCallsHelper(null, null, null, null, "html");
+            //        ajaxMenuHelper.url = $(this).prop("href");
+            //        ajaxMenuHelper.GetDataFullUrl().then(function (responseMenu) {
+            //            responseMenu = JSON.parse(responseMenu);
+            //            //if (ShowMessage(response.message, messageParentContainerId)) {
+            //            //Load Main Container
+            //            $(masterContentLayout).html("");
+            //            $(masterContentLayout).html(responseMenu.htmlContent);
+            //            RegisterCollapseExpand();
+            //            alert(1);
+            //            //}
+            //        });
+            //        var menus = $('.dropdown-toggle-custom');
+            //        if (menus.length > 0) {
+            //            menus.parent().find('.show').removeClass('show');
+            //            menus.parent().find('.selected-menu').removeClass('selected-menu');
+            //        }
+            //        e.preventDefault();
+            //    });
+            //}
+
+            //Shows/Hides submenus on click of menu
+            $('.dropdown-toggle-custom').on("click", function (e) {
+                menuSelectionStarted = true;
+                if ($(this).data("level") == "0") {
+                    $(this).data("selected", "1");
+                }
+
+                if ($(this).next('.dropdown-menu').hasClass("show")) {
+                    $(this).parent().find('.show').removeClass('show');
+                    $(this).parent().find('.selected-menu').removeClass('selected-menu');
+                }
+                else {
+                    $(this).parent().find('.show').removeClass('show');
+                    $(this).next('.dropdown-menu').addClass('show');
+                    $(this).addClass('selected-menu');
+                }
+
+                if ($(this).data("level") == "0") {
+                    $('.dropdown-toggle-custom').each(function () {
+                        if ($(this).data("level") == "0" && $(this).data("selected") != "1") {
+                            $(this).parent().find('.show').removeClass('show');
+                            $(this).parent().find('.selected-menu').removeClass('selected-menu');
+                        }
+                    });
+                    $(this).data("selected", "0");
+                }
+                e.stopPropagation();
+            });
+        }
+
+        return {
+            InitialLoad: InitialLoad
+        }
+    }
+    $(function () {
+        var modMenuIndex = new ModuleMenuIndex();
+        modMenuIndex.InitialLoad();       
+    });
+</script>
