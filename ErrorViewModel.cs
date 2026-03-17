@@ -16,6 +16,6 @@ namespace SampleCoreApp.Web.Models
         public string AliasName { get; set; }
         
         public string Name3{ get;  set; }
-        public string Name4{ get;  set; }
+        public string Name5{ get;  set; }
     }
 }
