@@ -10,5 +10,7 @@ namespace SampleCoreApp.Web.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
         public AdditionalInfoModel AdditionalInfoModel { get; set; }
+
+        public string AliasName{ get; set; }
     }
 }
