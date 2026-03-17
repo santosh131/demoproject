@@ -11,6 +11,8 @@ namespace SampleCoreApp.Web.Models
 
         public AdditionalInfoModel AdditionalInfoModel { get; set; }
 
+        public string Name{ get; set; }
+
         public string AliasName { get; set; }
         
         public string Name3{ get;  set; }
