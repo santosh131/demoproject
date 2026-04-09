@@ -1,8 +1,10 @@
 name: Ci Pileline
 
-on:
-    push: 
-        branches: [main]
+on: workflow_dispatch #triggers workflow manually
+
+#on:
+#    push: 
+#       branches: [main]
 
 jobs:
     build: 
