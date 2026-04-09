@@ -1,0 +1,38 @@
+name: Ci Pileline
+
+on:
+    push: 
+        branches: [main]
+
+jobs:
+    build: 
+        runs-on: [windows-latest]
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v6
+          with: 
+            fetch-depth: 0
+
+        - name: Setup .net core environment
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: '8.x'
+
+        - name: Restore .net project
+          run: dotnet restore
+        
+        - name: Build .net core project
+          run: dotnet build 
+
+        - name: Test .net core project
+          run: dotnet test
+
+        - name: Publish .net core project
+          run: dotnet publish -p:DebugSymbols=false -p:DegubType=None -c Release
+
+        - name: Completed status
+          run: |
+            echo 'Completed publishing the .net core project'
+        
+
+
